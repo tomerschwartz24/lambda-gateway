@@ -14,7 +14,7 @@ def lambda_handler(event, context):
 
     # Publish the result to the SNS topic
     sns_client.publish(
-        TopicArn='arn:aws:sns:eu-central-1:384005890259:cb-task-tomer',
+        TopicArn='',
         Message=f"The sum of both numbers is: {result}"
     )
     
