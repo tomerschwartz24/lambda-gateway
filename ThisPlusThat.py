@@ -1,26 +1,24 @@
 import json
 import boto3
 
-
-#initalize a lamba function that reads the provided numbers
 def lambda_handler(event, context):
+    #Get the two numbers provided by the user
     num1 = event['num1']
     num2 = event['num2']
     
-    # Calculate the sum of the provided numbers by the user
+    # Calculate the sum
     result = num1 + num2
     
-    # Use SNS library to connect to the AWS sns 
+    # Create an SNS client
     sns_client = boto3.client('sns')
 
-    # Push the result to the AWS SNS service 
+    # Publish the result to the SNS topic
     sns_client.publish(
-        #The topic I created
         TopicArn='arn:aws:sns:eu-central-1:384005890259:cb-task-tomer',
-        Message=str(result)
+        Message=f"The sum of both numbers is: {result}"
     )
     
-    # Result response 
+    # Response body
     response = {
         'statusCode': 200,
         'body': json.dumps({'result': result})
