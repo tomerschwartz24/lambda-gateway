@@ -3,8 +3,8 @@ import boto3
 
 def lambda_handler(event, context):
     #Get the two numbers provided by the user
-    num1 = event['num1']
-    num2 = event['num2']
+    num1 = int(event['num1'])
+    num2 = int(event['num2'])
     
     # Calculate the sum
     result = num1 + num2
