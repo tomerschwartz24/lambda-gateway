@@ -27,10 +27,17 @@ resource "null_resource" "provisioner" {
 }
 
 
-resource "aws_sns_topic_subscription" "email_subscription" {
+resource "aws_sns_topic_subscription" "email_subscription_tomer" {
   topic_arn = aws_sns_topic.my_sns_topic.arn
   protocol  = "email"
   endpoint  = "tomerschwartz2411@gmail.com"
+  
+}
+resource "aws_sns_topic_subscription" "email_subscription_eran" {
+  topic_arn = aws_sns_topic.my_sns_topic.arn
+  protocol  = "email"
+  endpoint  = "eranz@cloudbuzz.co.il"
+  
 }
 
 data "archive_file" "lambda_code" {
