@@ -1,5 +1,5 @@
 # CloudBuzz Candidate task
-## Serverless Lambda functiton that calculates the sum number of two numbers provided by the user in json format
+## Serverless Lambda function that calculates the sum number of two numbers provided by the user in json format
 ## Tools : Lambda | AWS SNS | IAM | PYTHON | API GATEWAY
 
 
