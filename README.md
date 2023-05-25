@@ -5,7 +5,7 @@
 
 Interviewer has been subscribed to the SNS topic and can execute the Lambda function by running : 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 5}' https://am2rtyixs3.execute-api.eu-central-1.amazonaws.com/Executor-Main/
+curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 5}' https://eqny1c6x25.execute-api.eu-central-1.amazonaws.com/Executor-tester
 ```
 ### Response body example : 
 ```
