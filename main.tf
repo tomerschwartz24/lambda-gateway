@@ -2,57 +2,41 @@ provider "aws" {
   region = "eu-central-1"
 }
 
-resource "aws_sns_topic" "my_sns_topic" {
+resource "aws_sns_topic" "tomers_topic" {
   name = "tomers-topic"
  
 }
 
 output "sns_topic_arn" {
-  value = aws_sns_topic.my_sns_topic.arn
+  value = aws_sns_topic.tomers_topic.arn
 }
 
-resource "null_resource" "provisioner" {
-  provisioner "local-exec" {
-    environment = {
-      SNS_TOPIC_ARN = aws_sns_topic.my_sns_topic.arn
-    }
-    command = <<-EOF
-      #!/bin/bash
-      SNS_TOPIC_ARN=$SNS_TOPIC_ARN
-      sed "s/TopicArn=''/TopicArn='$SNS_TOPIC_ARN'/" preCode.py > postCode.py
-    EOF
-  }
-
-  depends_on = [aws_sns_topic.my_sns_topic]
-}
 
 
 resource "aws_sns_topic_subscription" "email_subscription_tomer" {
-  topic_arn = aws_sns_topic.my_sns_topic.arn
+  topic_arn = aws_sns_topic.tomers_topic.arn
   protocol  = "email"
   endpoint  = "tomerschwartz2411@gmail.com"
-  
-}
-resource "aws_sns_topic_subscription" "email_subscription_eran" {
-  topic_arn = aws_sns_topic.my_sns_topic.arn
-  protocol  = "email"
-  endpoint  = "eranz@cloudbuzz.co.il"
   
 }
 
 data "archive_file" "lambda_code" {
   type        = "zip"
-  source_file = "postCode.py"
+  source_file = "lambda_func.py"
   output_path = "sumEvaluator.zip"
-  depends_on = [null_resource.provisioner]
 }
 
 resource "aws_lambda_function" "my_lambda_function" {
   filename      = data.archive_file.lambda_code.output_path
   function_name = "sum-calc"
   role          = aws_iam_role.lambda_role.arn
-  handler       = "postCode.lambda_handler"
+  handler       = "lambda_func.lambda_handler"
   runtime       = "python3.9"
+  environment {
+    variables = {
+      SNS_TOPIC_ARN = aws_sns_topic.tomers_topic.arn
+    }
+  }
 }
 
 resource "aws_iam_role" "lambda_role" {
@@ -86,7 +70,7 @@ resource "aws_iam_policy" "sns_publish_policy" {
     {
       "Effect": "Allow",
       "Action": "sns:Publish",
-      "Resource": "${aws_sns_topic.my_sns_topic.arn}"
+      "Resource": "${aws_sns_topic.tomers_topic.arn}"
     }
   ]
 }
