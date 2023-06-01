@@ -1,11 +1,11 @@
-# CloudBuzz Candidate task
+# Lambda function behind API Gateway
 ## Serverless Lambda function that calculates the sum number of two numbers provided by the user in json format
 ## Tools : Lambda | AWS SNS | IAM | PYTHON | API GATEWAY
 
 
-Interviewer has been subscribed to the SNS topic and can execute the Lambda function by running : 
+Testing the function can be done by running : 
 ```
-curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 5}' https://eqny1c6x25.execute-api.eu-central-1.amazonaws.com/Executor-tester
+curl -X POST -H "Content-Type: application/json" -d '{"num1": 5, "num2": 5}' <API Gateway Target URL> 
 ```
 ### Response body example : 
 ```
